@@ -26,6 +26,7 @@ set(SEAL_SOURCE_FILES ${SEAL_SOURCE_FILES}
     ${CMAKE_CURRENT_LIST_DIR}/uintarithsmallmod.cpp
     ${CMAKE_CURRENT_LIST_DIR}/uintcore.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ztools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/hello.cu
 )
 
 # Add header files for installation
@@ -63,6 +64,7 @@ install(
         ${CMAKE_CURRENT_LIST_DIR}/uintarithsmallmod.h
         ${CMAKE_CURRENT_LIST_DIR}/uintcore.h
         ${CMAKE_CURRENT_LIST_DIR}/ztools.h
+        ${CMAKE_CURRENT_LIST_DIR}/hello.cuh
     DESTINATION
         ${SEAL_INCLUDES_INSTALL_DIR}/seal/util
 )

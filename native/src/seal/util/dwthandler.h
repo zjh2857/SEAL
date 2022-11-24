@@ -10,6 +10,8 @@
 #include "seal/util/pointer.h"
 #include "seal/util/uintarithsmallmod.h"
 #include "seal/util/uintcore.h"
+// #include <cuda_runtime.h>
+#include "hello.cuh"
 #include <stdexcept>
 
 namespace seal
@@ -94,6 +96,10 @@ namespace seal
             void transform_to_rev(
                 ValueType *values, int log_n, const RootType *roots, const ScalarType *scalar = nullptr) const
             {
+                int res = test1(values,log_n,roots,arithmetic_.modulus_.value());
+                if(res == 1 && !scalar){
+                    return ;
+                }  
                 // constant transform size
                 size_t n = size_t(1) << log_n;
                 // registers to hold temporary values

@@ -325,6 +325,20 @@ namespace seal
             return y.operand * x - tmp1 * p;
         }
 
+        SEAL_NODISCARD inline std::uint64_t multiply_uint_mod_lazy(
+            std::uint64_t x, MultiplyUIntModOperand y, std::uint64_t modulus)
+        {
+#ifdef SEAL_DEBUG
+            if (y.operand >= modulus.value())
+            {
+                throw std::invalid_argument("operand y must be less than modulus");
+            }
+#endif
+            unsigned long long tmp1;
+            const std::uint64_t p = modulus;
+            multiply_uint64_hw64(x, y.quotient, &tmp1);
+            return y.operand * x - tmp1 * p;
+        }
         /**
         Returns value[0] = value mod modulus.
         Correctness: Follows the condition of barrett_reduce_128.

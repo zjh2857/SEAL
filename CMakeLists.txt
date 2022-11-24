@@ -23,7 +23,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message(STATUS "Build type (CMAKE_BUILD_TYPE): ${CMAKE_BUILD_TYPE}")
 
-project(SEAL VERSION 4.0.0 LANGUAGES CXX C)
+project(SEAL VERSION 4.0.0 LANGUAGES CXX C CUDA)
 
 ########################
 # Global configuration #
@@ -382,7 +382,8 @@ install(
 
 # Build only a static library
 if(NOT BUILD_SHARED_LIBS)
-    add_library(seal STATIC ${SEAL_SOURCE_FILES})
+    add_library(seal STATIC ${SEAL_SOURCE_FILES} native/src/seal/util/hello.cuh)
+    # add_library(seal STATIC ${SEAL_SOURCE_FILES})
     seal_set_version_filename(seal)
     seal_set_language(seal)
     seal_set_include_directories(seal)
@@ -772,3 +773,6 @@ configure_file(
     ${CMAKE_CURRENT_LIST_DIR}/dotnet/nuget/SEALNet.nuspec.in
     ${CMAKE_CURRENT_BINARY_DIR}/dotnet/nuget/SEALNet.nuspec
     @ONLY)
+
+set_target_properties(seal PROPERTIES
+    CUDA_SEPARABLE_COMPILATION OFF)

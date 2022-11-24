@@ -2,14 +2,18 @@
 // Licensed under the MIT license.
 
 #include "examples.h"
-
+#include <sys/time.h>
 using namespace std;
 using namespace seal;
-
+double cpuSecond()
+{
+  struct timeval tp;
+  gettimeofday(&tp,NULL);
+  return((double)tp.tv_sec+(double)tp.tv_usec*1e-6);
+}
 void example_ckks_basics()
 {
     print_example_banner("Example: CKKS Basics");
-
     /*
     In this example we demonstrate evaluating a polynomial function
 
@@ -21,6 +25,7 @@ void example_ckks_basics()
 
     We start by setting up the CKKS scheme.
     */
+    int start = cpuSecond();
     EncryptionParameters parms(scheme_type::ckks);
 
     /*
@@ -106,6 +111,7 @@ void example_ckks_basics()
     input.reserve(slot_count);
     double curr_point = 0;
     double step_size = 1.0 / (static_cast<double>(slot_count) - 1);
+    
     for (size_t i = 0; i < slot_count; i++)
     {
         input.push_back(curr_point);
@@ -130,8 +136,9 @@ void example_ckks_basics()
     cout << "Encode input vectors." << endl;
     encoder.encode(input, scale, x_plain);
     Ciphertext x1_encrypted;
+    for(int i = 0; i < 1;i++){
     encryptor.encrypt(x_plain, x1_encrypted);
-
+    }
     /*
     To compute x^3 we first compute x^2 and relinearize. However, the scale has
     now grown to 2^80.
@@ -308,7 +315,7 @@ void example_ckks_basics()
     encoder.decode(plain_result, result);
     cout << "    + Computed result ...... Correct." << endl;
     print_vector(result, 3, 7);
-
+    printf("time:%lf\n",cpuSecond()-start);
     /*
     While we did not show any computations on complex numbers in these examples,
     the CKKSEncoder would allow us to have done that just as easily. Additions

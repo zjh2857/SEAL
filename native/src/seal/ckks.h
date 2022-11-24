@@ -78,6 +78,9 @@ namespace seal
             {
                 return a;
             }
+            Modulus modulus_;
+
+            std::uint64_t two_times_modulus_;
         };
     } // namespace util
 

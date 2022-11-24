@@ -60,7 +60,7 @@ namespace seal
                 return SEAL_COND_SELECT(a >= two_times_modulus_, a - two_times_modulus_, a);
             }
 
-        private:
+        // private:
             Modulus modulus_;
 
             std::uint64_t two_times_modulus_;
